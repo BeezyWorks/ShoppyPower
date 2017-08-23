@@ -49,11 +49,10 @@ public class MainActivity extends AppCompatActivity implements ProductViewHolder
 
     @Override
     public void onBackPressed() {
-        if(this.inProductDetails){
+        if (this.inProductDetails) {
             getSupportFragmentManager().popBackStack();
             this.inProductDetails = false;
-        }
-        else{
+        } else {
             finish();
         }
     }
@@ -65,8 +64,10 @@ public class MainActivity extends AppCompatActivity implements ProductViewHolder
 
     @Override
     public void addedToCart(String productUPC) {
-        if(this.inProductDetails & this.productDetailsFragment.getProductUPC().equals(productUPC)){
-            this.productDetailsFragment.setProductQty(DataManager.getInstance().getProductByUPC(productUPC).getQty());
+        if (this.inProductDetails && this.productDetailsFragment.getProductUPC().equals(productUPC)) {
+            Product product = DataManager.getInstance().getProductByUPC(productUPC);
+            if (product == null) return;
+            this.productDetailsFragment.setProductQty(product.getQty());
         }
     }
 }
